@@ -7,23 +7,28 @@
 </head>
 <body>
 	<h1 style="text-align: center">Jadavpur University</h1>
-	<h4>Home</h4>
 	<%
-	DriverManager.registerDriver (new oracle.jdbc.OracleDriver());
-	Connection  con = DriverManager.getConnection("jdbc:oracle:thin:@172.16.4.124:1521:ibmora", "be15114", "be15114");
+	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+	Connection  con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ju", "root", "");
 	Statement stmt = con.createStatement();
 	String rollno = request.getParameter("rollno");
 	String pass = request.getParameter("password");
 	String c = "Select * from students where rollno = " + rollno ;
 	ResultSet rs = stmt.executeQuery(c);
-	System.out.println(c);
 	String pp = "";
-	if(rs==null) out.println("Not yet registered.");
-	else{
-		rs.next();
+	boolean notFound=true;
+	while(rs.next()){
+		notFound=false;
 		pp = rs.getString("pass");
-		if(pp.equals(pass)) out.println("Logged in");
-		else out.println("Wrong password. Try again.");
+		if(pp.equals(pass)) {
+			out.println("<h4>Home</h4>");
+			out.println("Logged in");
+			out.println("<br><br><br>Click <a href='login.jsp'>here</a> to log out");
+		}
+		else out.println("Wrong password. Try again <a href='login.jsp'>here</a>");
+	}
+	if(notFound){
+		out.println("Not yet registered.");
 	}
 	%>	
 </body>

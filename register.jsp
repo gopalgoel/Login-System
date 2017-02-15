@@ -13,5 +13,6 @@
 		<label>Password </label><input type="Password" name="password"><br><br>
 		<input type="submit" value="Register">
 	</form>
+	<p>Already have an account? Login <a href="login.jsp">here</a></p>
 </body>
 </html>
